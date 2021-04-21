@@ -1,0 +1,81 @@
+{
+ "properties": {
+  "displayName": "deny-peering-to-non-approved-vnets",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "VNet Peering is only allowed to approved VNets. If you try to peer to a VNet that's not on the list of approved VNets then the action will be denied.",
+  "metadata": {
+   "createdBy": "ce2baef6-e629-455d-8e12-5d34cc914a65",
+   "createdOn": "2021-04-21T15:35:54.2700395Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "allowedVnets": {
+    "type": "array",
+    "metadata": {
+     "displayName": "Allowed VNets",
+     "description": "Enter list of allowed VNets using a semi-coling ';' seperated list. VNets must be entered using their resource ID. Example: /subscriptions/{SubID}/resourceGroups/resourceGroupName/providers/Microsoft.Network/virtualNetworks/resourceGroupName/virtualNetworkPeerings/vnetName"
+    }
+   },
+   "effect": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Effect",
+     "description": "Enable or disable the execution of the policy"
+    },
+    "allowedValues": [
+     "Deny",
+     "Disabled"
+    ],
+    "defaultValue": "Deny"
+   }
+  },
+  "policyRule": {
+   "if": {
+    "anyOf": [
+     {
+      "allOf": [
+       {
+        "field": "type",
+        "equals": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings"
+       },
+       {
+        "not": {
+         "field": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings/remoteVirtualNetwork.id",
+         "in": "[parameters('allowedVnets')]"
+        }
+       }
+      ]
+     },
+     {
+      "allOf": [
+       {
+        "field": "type",
+        "equals": "Microsoft.Network/virtualNetworks"
+       },
+       {
+        "not": {
+         "field": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings[*].remoteVirtualNetwork.id",
+         "in": "[parameters('allowedVnets')]"
+        }
+       },
+       {
+        "not": {
+         "field": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings[*].remoteVirtualNetwork.id",
+         "exists": false
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "then": {
+    "effect": "[parameters('effect')]"
+   }
+  }
+ },
+ "id": "/subscriptions/ac523bbb-5dca-46d7-9d3a-e16ddae8a7dd/providers/Microsoft.Authorization/policyDefinitions/deny-peering-to-non-approved-vnets",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "deny-peering-to-non-approved-vnets"
+}

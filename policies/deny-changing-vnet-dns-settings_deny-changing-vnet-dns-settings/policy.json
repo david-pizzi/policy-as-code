@@ -1,0 +1,51 @@
+{
+ "properties": {
+  "displayName": "deny-changing-vnet-dns-settings",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "Deny changing VNet DNS settings from pre-defined value. This Policy will prevent users from changing DNS settings on a VNet",
+  "metadata": {
+   "createdBy": "ce2baef6-e629-455d-8e12-5d34cc914a65",
+   "createdOn": "2021-04-21T15:35:35.5326266Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "dnsSettings": {
+    "type": "array",
+    "metadata": {
+     "displayname": "Enforced DNS Settings",
+     "description": "Users will be unable to change the DNS settings on a VNet from the values defined in this array."
+    }
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Network/virtualNetworks"
+     },
+     {
+      "anyOf": [
+       {
+        "value": "[if(empty(field('Microsoft.Network/virtualNetworks/dhcpOptions.dnsServers')), bool('false'), equals(length(intersection(parameters('dnsSettings'), field('Microsoft.Network/virtualNetworks/dhcpOptions.dnsServers'))), length(parameters('dnsSettings'))))]",
+        "equals": false
+       },
+       {
+        "value": "[if(empty(field('Microsoft.Network/virtualNetworks/dhcpOptions.dnsServers')), bool('false'), equals(length(field('Microsoft.Network/virtualNetworks/dhcpOptions.dnsServers')),length(parameters('dnsSettings'))))]",
+        "equals": false
+       }
+      ]
+     }
+    ]
+   },
+   "then": {
+    "effect": "deny"
+   }
+  }
+ },
+ "id": "/subscriptions/ac523bbb-5dca-46d7-9d3a-e16ddae8a7dd/providers/Microsoft.Authorization/policyDefinitions/deny-changing-vnet-dns-settings",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "deny-changing-vnet-dns-settings"
+}
