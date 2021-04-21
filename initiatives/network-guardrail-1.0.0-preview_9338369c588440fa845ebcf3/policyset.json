@@ -1,0 +1,78 @@
+{
+ "properties": {
+  "displayName": "network-guardrail-1.0.0-preview",
+  "policyType": "Custom",
+  "description": "Update guardrail for Network RG",
+  "metadata": {
+   "createdBy": "ce2baef6-e629-455d-8e12-5d34cc914a65",
+   "createdOn": "2021-04-21T16:00:23.4271424Z",
+   "updatedBy": "ce2baef6-e629-455d-8e12-5d34cc914a65",
+   "updatedOn": "2021-04-21T16:05:47.1950264Z"
+  },
+  "parameters": {
+   "dnsSettings": {
+    "type": "array",
+    "metadata": {
+     "displayName": "dnsSettings",
+     "description": "Users will be unable to change the DNS settings on a VNet from the values defined in this array."
+    }
+   },
+   "allowedVnets": {
+    "type": "array",
+    "metadata": {
+     "displayName": "allowedVnets",
+     "description": "Enter list of allowed VNets using a semi-coling ';' seperated list. VNets must be entered using their resource ID. Example: /subscriptions/{SubID}/resourceGroups/resourceGroupName/providers/Microsoft.Network/virtualNetworks/resourceGroupName/virtualNetworkPeerings/vnetName"
+    }
+   },
+   "routeTableSettings": {
+    "type": "object",
+    "metadata": {
+     "displayName": "routeTableSettings",
+     "description": "Location-specific NVA IP address for route tables."
+    }
+   }
+  },
+  "policyDefinitions": [
+   {
+    "policyDefinitionReferenceId": "deny-changing-vnet-dns-settings_1",
+    "policyDefinitionId": "/subscriptions/ac523bbb-5dca-46d7-9d3a-e16ddae8a7dd/providers/Microsoft.Authorization/policyDefinitions/deny-changing-vnet-dns-settings",
+    "parameters": {
+     "dnsSettings": {
+      "value": "[parameters('dnsSettings')]"
+     }
+    },
+    "groupNames": []
+   },
+   {
+    "policyDefinitionReferenceId": "deny-peering-to-non-approved-vnets_1",
+    "policyDefinitionId": "/subscriptions/ac523bbb-5dca-46d7-9d3a-e16ddae8a7dd/providers/Microsoft.Authorization/policyDefinitions/deny-peering-to-non-approved-vnets",
+    "parameters": {
+     "allowedVnets": {
+      "value": "[parameters('allowedVnets')]"
+     }
+    },
+    "groupNames": []
+   },
+   {
+    "policyDefinitionReferenceId": "deny-route-nexthopinternet_1",
+    "policyDefinitionId": "/subscriptions/ac523bbb-5dca-46d7-9d3a-e16ddae8a7dd/providers/Microsoft.Authorization/policyDefinitions/deny-route-nexthopinternet",
+    "parameters": {},
+    "groupNames": []
+   },
+   {
+    "policyDefinitionReferenceId": "deny-route-nexthopvirtualappliance_1",
+    "policyDefinitionId": "/subscriptions/ac523bbb-5dca-46d7-9d3a-e16ddae8a7dd/providers/Microsoft.Authorization/policyDefinitions/deny-route-nexthopvirtualappliance",
+    "parameters": {
+     "routeTableSettings": {
+      "value": "[parameters('routeTableSettings')]"
+     }
+    },
+    "groupNames": []
+   }
+  ],
+  "policyDefinitionGroups": []
+ },
+ "id": "/subscriptions/ac523bbb-5dca-46d7-9d3a-e16ddae8a7dd/providers/Microsoft.Authorization/policySetDefinitions/9338369c588440fa845ebcf3",
+ "type": "Microsoft.Authorization/policySetDefinitions",
+ "name": "9338369c588440fa845ebcf3"
+}
