@@ -27,3 +27,8 @@ jobs:
         paths: |
           policies/**
           initiatives/**
+    - name: Check for resource compliance
+      uses: azure/policy-compliance-scan@v0
+      with:
+        scopes: |
+          /subscriptions/ac523bbb-5dca-46d7-9d3a-e16ddae8a7dd
