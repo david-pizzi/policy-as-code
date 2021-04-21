@@ -1,5 +1,5 @@
 name: manage-azure-policy-154ca1e9
-on: push
+on: push 
 
 ## Uncomment the following if you wish to automatically trigger workflow run with every commit
 #
