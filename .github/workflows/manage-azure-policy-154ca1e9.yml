@@ -32,7 +32,5 @@ jobs:
       uses: azure/manage-azure-policy@v0
       with:
         paths: |
-          policies/deny-changing-vnet-dns-settings_deny-changing-vnet-dns-settings/**
-          policies/deny-peering-to-non-approved-vnets_deny-peering-to-non-approved-vnets/**
-          policies/deny-route-nexthopvirtualappliance_deny-route-nexthopvirtualappliance/**
-          policies/deny-route-nexthopinternet_deny-route-nexthopinternet/**
+          policies/**
+          initiatives/**
