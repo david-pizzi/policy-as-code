@@ -32,3 +32,4 @@ jobs:
       with:
         scopes: |
           /subscriptions/ac523bbb-5dca-46d7-9d3a-e16ddae8a7dd
+        wait: false
