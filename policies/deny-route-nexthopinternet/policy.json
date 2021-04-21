@@ -1,56 +1,58 @@
 {
- "properties": {
-  "displayName": "deny-route-nexthopinternet",
-  "policyType": "Custom",
-  "mode": "All",
-  "description": "Deny route with next hop type internet to ensure data loss prevention. Both creating routes as a standalone resource or nested within their parent resource route table are considered.",
-  "metadata": {
-   "createdBy": "ce2baef6-e629-455d-8e12-5d34cc914a65",
-   "createdOn": "2021-04-21T15:23:18.5290962Z",
-   "updatedBy": "ce2baef6-e629-455d-8e12-5d34cc914a65",
-   "updatedOn": "2021-04-21T15:36:21.2040279Z"
-  },
-  "policyRule": {
-   "if": {
-    "anyOf": [
-     {
-      "allOf": [
-       {
-        "field": "type",
-        "equals": "Microsoft.Network/routeTables"
-       },
-       {
-        "count": {
-         "field": "Microsoft.Network/routeTables/routes[*]",
-         "where": {
-          "field": "Microsoft.Network/routeTables/routes[*].nextHopType",
-          "equals": "Internet"
-         }
+    "properties": {
+        "displayName": "deny-route-nexthopinternet",
+        "policyType": "Custom",
+        "mode": "All",
+        "description": "Deny route with next hop type internet to ensure data loss prevention. Both creating routes as a standalone resource or nested within their parent resource route table are considered.",
+        "metadata": {
+            "category": "Network",
+            "version": "1.0.0-preview",
+            "createdBy": "ce2baef6-e629-455d-8e12-5d34cc914a65",
+            "createdOn": "2021-04-21T15:23:18.5290962Z",
+            "updatedBy": "ce2baef6-e629-455d-8e12-5d34cc914a65",
+            "updatedOn": "2021-04-21T15:36:21.2040279Z"
         },
-        "greater": 0
-       }
-      ]
-     },
-     {
-      "allOf": [
-       {
-        "field": "type",
-        "equals": "Microsoft.Network/routeTables/routes"
-       },
-       {
-        "field": "Microsoft.Network/routeTables/routes/nextHopType",
-        "equals": "Internet"
-       }
-      ]
-     }
-    ]
-   },
-   "then": {
-    "effect": "deny"
-   }
-  }
- },
- "id": "/subscriptions/ac523bbb-5dca-46d7-9d3a-e16ddae8a7dd/providers/Microsoft.Authorization/policyDefinitions/deny-route-nexthopinternet",
- "type": "Microsoft.Authorization/policyDefinitions",
- "name": "deny-route-nexthopinternet"
+        "policyRule": {
+            "if": {
+                "anyOf": [
+                    {
+                        "allOf": [
+                            {
+                                "field": "type",
+                                "equals": "Microsoft.Network/routeTables"
+                            },
+                            {
+                                "count": {
+                                    "field": "Microsoft.Network/routeTables/routes[*]",
+                                    "where": {
+                                        "field": "Microsoft.Network/routeTables/routes[*].nextHopType",
+                                        "equals": "Internet"
+                                    }
+                                },
+                                "greater": 0
+                            }
+                        ]
+                    },
+                    {
+                        "allOf": [
+                            {
+                                "field": "type",
+                                "equals": "Microsoft.Network/routeTables/routes"
+                            },
+                            {
+                                "field": "Microsoft.Network/routeTables/routes/nextHopType",
+                                "equals": "Internet"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "then": {
+                "effect": "deny"
+            }
+        }
+    },
+    "id": "/subscriptions/ac523bbb-5dca-46d7-9d3a-e16ddae8a7dd/providers/Microsoft.Authorization/policyDefinitions/deny-route-nexthopinternet",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "name": "deny-route-nexthopinternet"
 }
