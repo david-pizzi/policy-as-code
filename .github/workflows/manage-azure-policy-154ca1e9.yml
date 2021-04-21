@@ -2,7 +2,7 @@ name: manage-azure-policy-154ca1e9
 on: push 
 
 ## Uncomment the following if you wish to automatically trigger workflow run with every commit
-#
+# 
 #  push:
 #    paths:
 #      - 'policies/deny-changing-vnet-dns-settings_deny-changing-vnet-dns-settings/**'
